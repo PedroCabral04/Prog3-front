@@ -2,7 +2,7 @@
 class ApiConfig {
   // Base URL for the FastAPI backend
   // Change this to your production URL when deploying
-  static const String baseUrl = 'http://localhost:8000';
+  static const String baseUrl = 'https://prog3-back.onrender.com';
 
   // API version prefix
   static const String apiPrefix = '/api/v1';
