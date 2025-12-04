@@ -9,25 +9,29 @@ WORKDIR /app
 COPY pubspec.yaml pubspec.lock ./
 
 # Baixa as dependências
-RUN flutter pub get
+RUN flutter pub get --no-example
 
 # Copia todo o código fonte
 COPY . .
 
-# Build da aplicação web para produção
-RUN flutter build web --release
+# Build da aplicação web para produção (sem símbolos de debug)
+RUN flutter build web --release --dart-define=FLUTTER_WEB_CANVASKIT_URL=https://cdn.jsdelivr.net/npm/canvaskit-wasm@0.37.0/bin/ && \
+    rm -rf .dart_tool .git .gitignore
 
-# Stage 2: Servidor Nginx para servir os arquivos estáticos
-FROM nginx:alpine
+# Stage 2: Servidor Node.js leve para servir arquivos estáticos
+FROM node:20-alpine
+
+# Define o diretório de trabalho
+WORKDIR /app
+
+# Instala um servidor HTTP simples e rápido
+RUN npm install -g serve
 
 # Copia os arquivos buildados do stage anterior
-COPY --from=build-env /app/build/web /usr/share/nginx/html
+COPY --from=build-env /app/build/web ./build/web
 
-# # Copia configuração customizada do Nginx (se existir)
-# COPY nginx.conf /etc/nginx/conf.d/default.conf
+# Expõe a porta 3000
+EXPOSE 3000
 
-# Expõe a porta 80
-EXPOSE 80
-
-# Inicia o Nginx
-CMD ["nginx", "-g", "daemon off;"]
+# Inicia o servidor
+CMD ["serve", "-s", "build/web", "-l", "3000"]

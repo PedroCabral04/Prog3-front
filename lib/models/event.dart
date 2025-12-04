@@ -39,16 +39,20 @@ class Event {
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'user_id': userId,
+    final json = <String, dynamic>{
       'title': title,
-      'description': description,
       'datetime': datetime.toIso8601String(),
       'duration_minutes': durationMinutes,
       'priority': priority.name,
-      'created_at': createdAt?.toIso8601String(),
     };
+    
+    // Only include optional fields if they have values
+    if (id.isNotEmpty) json['id'] = id;
+    if (userId.isNotEmpty) json['user_id'] = userId;
+    if (description != null) json['description'] = description;
+    if (createdAt != null) json['created_at'] = createdAt!.toIso8601String();
+    
+    return json;
   }
 
   static EventPriority _parsePriority(String? priority) {
