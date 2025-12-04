@@ -27,8 +27,8 @@ class Event {
       userId: json['user_id'] ?? '',
       title: json['title'] ?? '',
       description: json['description'],
-      datetime: json['datetime'] != null
-          ? DateTime.parse(json['datetime'])
+      datetime: json['event_date'] != null
+          ? DateTime.parse(json['event_date'])
           : DateTime.now(),
       durationMinutes: json['duration_minutes'] ?? 60,
       priority: _parsePriority(json['priority']),
@@ -41,7 +41,7 @@ class Event {
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{
       'title': title,
-      'datetime': datetime.toIso8601String(),
+      'event_date': datetime.toIso8601String(),
       'duration_minutes': durationMinutes,
       'priority': priority.name,
     };
