@@ -108,29 +108,6 @@ class BrokerCard extends StatelessWidget {
                     top: BorderSide(color: Colors.grey.withOpacity(0.2)),
                   ),
                 ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    _CompactStatItem(
-                      icon: Icons.shopping_cart_rounded,
-                      value: '${broker.totalSales}',
-                      label: 'Vendas',
-                      color: Colors.green,
-                    ),
-                    _CompactStatItem(
-                      icon: Icons.home_rounded,
-                      value: '${broker.totalListings}',
-                      label: 'Captações',
-                      color: Colors.orange,
-                    ),
-                    _CompactStatItem(
-                      icon: Icons.attach_money_rounded,
-                      value: _formatCurrency(broker.totalValue),
-                      label: 'Valor Total',
-                      color: Colors.blue,
-                    ),
-                  ],
-                ),
               ),
             ],
           ),
