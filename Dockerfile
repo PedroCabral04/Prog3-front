@@ -4,10 +4,8 @@ WORKDIR /app
 # Copy project files
 COPY . .
 
-# Ensure flutter SDK is up to date and dependencies are fetched
-RUN flutter channel stable && \
-    flutter upgrade --force && \
-    flutter pub get
+# Ensure dependencies are fetched (avoid switching channels inside container)
+RUN flutter pub get
 
 # Build the web release
 RUN flutter build web --release
