@@ -55,12 +55,6 @@ class _ShellScreenState extends State<ShellScreen> {
         label: 'Agenda',
         route: '/agenda',
       ),
-      const _NavItem(
-        icon: Icons.flag_outlined,
-        selectedIcon: Icons.flag,
-        label: 'Metas',
-        route: '/goals',
-      ),
     ];
 
     return Scaffold(
